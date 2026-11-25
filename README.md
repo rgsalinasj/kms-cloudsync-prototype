@@ -1,24 +1,34 @@
-# Prototipo de Sistema de Gestión del Conocimiento (KMS) - CloudSync Engineering
+# Sistema de Gestión del Conocimiento Impulsado por IA — CloudSync Engineering
 
-**Autor:** Rafael Guadalupe Salinas Jiménez  
-**Materia:** Sistemas y Tecnologías de Administración del Conocimiento  
+- **Autor:** Rafael Guadalupe Salinas Jiménez (AL03085966)
+- **Materia:** Sistemas y Tecnologías de Administración del Conocimiento
+- **Prototipo Desplegado:** https://kms-cloudsync-prototype-gegukdpix7j9dxz8nzr3ka.streamlit.app/
+- **Repositorio:** https://github.com/rgsalinasj/kms-cloudsync-prototype
 
-## Descripción del Proyecto
-Este repositorio contiene el prototipo funcional de un Sistema de Gestión del Conocimiento desarrollado para la empresa ficticia **CloudSync Engineering** (consultoría tecnológica especializada en Cloud y Machine Learning). El sistema automatiza la organización y recuperación de documentos técnicos y administrativos mediante técnicas de Procesamiento de Lenguaje Natural (NLP).
+---
 
-## Funcionalidades Implementadas
-1. **Vectorización de Texto (TF-IDF):** Transforma los documentos corporativos en representaciones numéricas ponderadas filtrando palabras vacías (*stop words*).
-2. **Clasificación Automatizada:** Entrena un modelo **Multinomial Naive Bayes** para categorizar automáticamente nuevos documentos en tres áreas principales: *Infraestructura*, *Desarrollo* y *Recursos Humanos*.
-3. **Búsqueda Semántica:** Procesa consultas en lenguaje natural y calcula la **similitud del coseno** contra la base documental para recuperar los archivos más relevantes ordenados por puntuación.
+## 1. Descripción General y Contexto Organizacional
+**CloudSync Engineering** es una firma de consultoría tecnológica especializada en arquitecturas Cloud (AWS/Azure), desarrollo de software nativo en la nube, soluciones de Machine Learning y soporte de infraestructura. El sistema resuelve la fragmentación de conocimiento técnico y administrativo centralizando manuales de configuración, repositorios de código, reportes post-mortem y guías de recursos humanos en una plataforma unificada asistida por Inteligencia Artificial.
 
-## Estructura del Repositorio
-* `prototipo_kms.py`: Script principal en Python con el flujo completo de vectorización, entrenamiento, clasificación y búsqueda semántica.
-* `documentos_prueba.txt`: Conjunto de documentos corporativos, casos de prueba y consultas utilizadas para validar el prototipo.
-* `README.md`: Documentación general del proyecto e instrucciones de ejecución.
+## 2. Arquitectura del Sistema
+El sistema sigue una arquitectura modular de tres capas ejecutada sobre Python y Streamlit:
 
-## Requisitos y Ejecución
-Para ejecutar el prototipo localmente se requiere **Python 3.8+** y la librería `scikit-learn`:
-
-```bash
-pip install scikit-learn numpy pandas
-python prototipo_kms.py
+```text
++-----------------------------------------------------------------------+
+|                    INTERFAZ WEB INTEGRADA (Streamlit)                 |
+|  [1. Clasificador]  [2. Recomendador]  [3. Chatbot]  [4. Grafo]       |
++-----------------------------------+-----------------------------------+
+                                    | Intercambio de estado (session_state)
++-----------------------------------v-----------------------------------+
+|               CAPA DE PROCESAMIENTO SEMÁNTICO E IA                    |
+|  • Vectorizador Compartido: TfidfVectorizer (n-gramas 1,2 + stopwords)|
+|  • Clasificador: Multinomial Naive Bayes (alpha=0.5)                  |
+|  • Motor de Similitud: Similitud del Coseno (Documento e Historial)   |
+|  • Motor de Grafo: NetworkX (DiGraph) + PyVis (Renderizado HTML)      |
++-----------------------------------+-----------------------------------+
+                                    |
++-----------------------------------v-----------------------------------+
+|                 REPOSITORIO DE CONOCIMIENTO (Docs)                    |
+|  Metadatos estructurados: ID, Título, Tipo Ontológico, Dominio,       |
+|  Conceptos Clave y Contenido Textual (CS-01 a CS-09+)                 |
++-----------------------------------------------------------------------+
